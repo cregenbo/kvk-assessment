@@ -1,0 +1,12 @@
+= Readme
+
+== Running the application
+
+Using docker:
+[source,shell]
+----
+docker build -t kvk-assessment .
+docker run -p 8080:8080 --name kvk-assessment --rm kvk-assessment
+----
+
+API documentation can be found at `http://localhost:8080/swagger-ui.html` or `http://localhost:8080/v3/api-docs`.
