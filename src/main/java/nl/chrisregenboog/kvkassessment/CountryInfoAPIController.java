@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
 				description = "API for retrieving country information"
 		)
 )
-@RestController("/country")
+@RestController
 @RequiredArgsConstructor
 public class CountryInfoAPIController {
 
@@ -60,7 +60,7 @@ public class CountryInfoAPIController {
 			}
 	)
 	@GetMapping(
-			path = "/{countryCode}",
+			path = "/country/{countryCode}",
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	@JsonView(PublicView.class)
 	Mono<ResponseEntity<CountryInfo>> getCountry(@PathVariable @NonNull @CountryCodeParameter String countryCode) {
@@ -85,7 +85,7 @@ public class CountryInfoAPIController {
 			}
 	)
 
-	@PostMapping("/{countryCode}")
+	@PostMapping("/country/{countryCode}")
 	Mono<Void> addCountry(@PathVariable @NonNull @CountryCodeParameter String countryCode) {
 		return getRestCountriesAPIResponseMono(countryCode)
 				.map(restCountriesAPIResponse -> toCountry(countryCode, restCountriesAPIResponse))

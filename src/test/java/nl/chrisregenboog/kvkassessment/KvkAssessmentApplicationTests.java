@@ -40,7 +40,7 @@ class KvkAssessmentApplicationTests {
     @DisplayName("The Netherlands country code should be added to the database after a post request")
     public void postCountryCodeTest() {
         // Post nl country
-        webTestClient.post().uri("/nl").exchange()
+        webTestClient.post().uri("/country/nl").exchange()
                 .expectStatus().isOk();
 
         // Check if nl country is in db
@@ -61,11 +61,11 @@ class KvkAssessmentApplicationTests {
     @DisplayName("The Netherlands country info should be returned after a get request, if present in the database")
     public void getExistingCountryCodeTest() {
         // Populate db with nl country
-        webTestClient.post().uri("/nl").exchange()
+        webTestClient.post().uri("/country/nl").exchange()
                 .expectStatus().isOk();
 
         // Get nl country info
-        webTestClient.get().uri("/nl").exchange()
+        webTestClient.get().uri("/country/nl").exchange()
                 .expectStatus().isOk()
                 .expectBody()
                 .jsonPath("$.countryName").isEqualTo(NETHERLANDS)
@@ -76,14 +76,14 @@ class KvkAssessmentApplicationTests {
     @Test
     @DisplayName("A 204 No Content status should be returned after a get request, if the country code is not present in the database")
     public void getAbsentCountryCodeTest() {
-        webTestClient.get().uri("/foobar").exchange()
+        webTestClient.get().uri("/country/foobar").exchange()
                 .expectStatus().isNoContent();
     }
 
     @Test
     @DisplayName("A 500 Internal Server Error status should be returned after a post request, if the country code is not present in the external API")
     public void postAbsentCountryCodeTest() {
-        webTestClient.post().uri("/foobar").exchange()
+        webTestClient.post().uri("/country/foobar").exchange()
                 .expectStatus().is5xxServerError();
     }
 }
